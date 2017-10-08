@@ -87,9 +87,9 @@ class App extends Component {
             company="California Institute of Technology"
           />
 
-          <Image
+          <GalleryImage
             src="https://images.unsplash.com/photo-1488388373205-a134c1cc7e4e?dpr=1&auto=compress,format"
-            caption="The journey is worth the search"
+            caption="Follow your path"
           />
 
           <h2>Vitals</h2>
