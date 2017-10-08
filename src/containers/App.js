@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
 
-import logo from 'images/logo.svg';
 import './App.css';
+import withGallery from 'containers/withGallery';
 import Image from 'components/Image';
 import Signature from 'components/Signature';
+
+import logo from 'images/logo.svg';
+import feynman from 'images/richard-feynman.jpg';
+
+const galleryStore = [];
+const GalleryImage = withGallery(Image, galleryStore);
 
 class App extends Component {
   render() {
@@ -13,7 +19,13 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Surely You're Joking, Mr. Feynman!</h1>
         </header>
+
         <article className="App-intro">
+          <GalleryImage
+            src={feynman}
+            caption="Richard Feynman was one of the greatest problem solvers of the 20th century and loved being puzzled"
+          />
+
           <h2>Preface</h2>
           <p>
             The stories in this book were collected intermittently and
@@ -26,7 +38,7 @@ class App extends Component {
           </p>
           <Signature author="Ralph Leighton" />
 
-          <Image
+          <GalleryImage
             src="https://images.unsplash.com/photo-1482862549707-f63cb32c5fd9?dpr=1&auto=compress,format"
             caption="The night was dark and full of terrors"
           />
@@ -109,6 +121,11 @@ class App extends Component {
             children, Carl and Michelle.
           </p>
           <Signature author="R. P. F." />
+
+          <Image
+            src="https://images.unsplash.com/photo-1487640228478-7a32e30a9e40?dpr=1&auto=compress,format"
+            caption="You will find what you seek"
+          />
         </article>
       </div>
     );
