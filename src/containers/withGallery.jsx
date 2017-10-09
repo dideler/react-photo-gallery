@@ -11,13 +11,13 @@ export default function withGallery(ImageComponent, store) {
       this.images.push(props);
       this.state = {
         currentImage: null,
-        modalHidden: true,
+        hidden: true,
       };
     }
 
     handleImageClick = () => {
       this.setState(currentImage(this.images));
-      this.setState({ modalHidden: !this.state.modalHidden });
+      this.setState(toggleHidden);
     };
 
     render() {
@@ -26,7 +26,7 @@ export default function withGallery(ImageComponent, store) {
           <ImageComponent onClick={this.handleImageClick} {...this.props} />
           <ImageGallery
             startingImage={this.props.src}
-            hidden={this.state.modalHidden}
+            hidden={this.state.hidden}
           />
         </div>
       );
@@ -42,6 +42,10 @@ function currentImage(images) {
   });
 }
 
+function toggleHidden(state) {
+  return { hidden: !state.hidden };
+}
+
 export class ImageGallery extends React.Component {
   constructor(props) {
     super(props);
@@ -52,11 +56,11 @@ export class ImageGallery extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({ hidden: !this.state.hidden });
+    this.setState(toggleHidden);
   }
 
   handleClick = () => {
-    this.setState({ hidden: !this.state.hidden });
+    this.setState(toggleHidden);
   };
 
   render() {
@@ -76,6 +80,7 @@ export class ImageGallery extends React.Component {
 
 ImageGallery.propTypes = {
   startingImage: PropTypes.string.isRequired,
+  hidden: PropTypes.bool,
 };
 
 ImageGallery.defaultProps = {
