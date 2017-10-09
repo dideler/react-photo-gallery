@@ -26,6 +26,7 @@ export default function withGallery(ImageComponent, store) {
           <ImageComponent onClick={this.handleImageClick} {...this.props} />
           <ImageGallery
             startingImage={this.props.src}
+            startingCaption={this.props.caption}
             hidden={this.state.hidden}
           />
         </div>
@@ -51,6 +52,7 @@ export class ImageGallery extends React.Component {
     super(props);
     this.state = {
       currentImage: props.startingImage,
+      currentCaption: props.startingCaption,
       hidden: props.hidden,
     };
   }
@@ -64,15 +66,31 @@ export class ImageGallery extends React.Component {
   };
 
   render() {
+    const { currentImage, currentCaption, hidden } = this.state;
     return (
       <div
         className="ImageGallery"
-        style={{ display: this.state.hidden ? 'none' : 'block' }}
+        style={{ display: hidden ? 'none' : 'block' }}
       >
         <span className="ModalClose" onClick={this.handleClick}>
           &times;
         </span>
-        <img className="ModalImage" src={this.state.currentImage} />
+
+        <figure>
+          <div className="ModalImageContainer">
+            <img
+              className="ModalImage"
+              src={currentImage}
+              alt={this.props.alt}
+            />
+
+            {currentCaption && (
+              <figcaption className="ModalImageCaption">
+                {currentCaption}
+              </figcaption>
+            )}
+          </div>
+        </figure>
       </div>
     );
   }

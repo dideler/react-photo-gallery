@@ -2,7 +2,7 @@
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
-  padding-top: 100px; /* Location of the box */
+  padding-top: 15px; /* Location of the box */
   left: 0;
   top: 0;
   width: 100%; /* Full width */
@@ -13,10 +13,24 @@
 }
 
 .ModalImage {
+  width: 100%;
+}
+
+/* Full image width on screens smaller than 1024px wide */
+@media only screen and (max-width: 1024px) {
+  .ModalImage {
+    width: 100%;
+  }
+}
+
+.ModalImageContainer {
   margin: auto;
   display: block;
   width: 80%;
-  max-width: 700px;
+}
+
+.ModalImageCaption {
+  color: antiquewhite;
 }
 
 .ModalClose {
