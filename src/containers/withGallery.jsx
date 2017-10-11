@@ -76,8 +76,8 @@ export class ImageGallery extends React.Component {
           &times;
         </span>
 
-        <figure>
-          <div className="ModalImageContainer">
+        <div className="ModalImageContainer">
+          <figure>
             <img
               className="ModalImage"
               src={currentImage}
@@ -89,8 +89,14 @@ export class ImageGallery extends React.Component {
                 {currentCaption}
               </figcaption>
             )}
-          </div>
-        </figure>
+          </figure>
+          <a class="prev" onclick="rotateSlides(-1)">
+            ❮
+          </a>
+          <a class="next" onclick="rotateSlides(1)">
+            ❯
+          </a>
+        </div>
       </div>
     );
   }
