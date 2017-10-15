@@ -25,6 +25,7 @@ export default function withGallery(ImageComponent, store) {
         <div>
           <ImageComponent onClick={this.handleImageClick} {...this.props} />
           <ImageGallery
+            images={this.images}
             startingImage={this.props.src}
             startingCaption={this.props.caption}
             hidden={this.state.hidden}
@@ -43,6 +44,10 @@ function currentImage(images) {
   });
 }
 
+function rotateImage(position) {
+  // TODO
+}
+
 function toggleHidden(state) {
   return { hidden: !state.hidden };
 }
@@ -51,6 +56,7 @@ export class ImageGallery extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      images: props.images,
       currentImage: props.startingImage,
       currentCaption: props.startingCaption,
       hidden: props.hidden,
@@ -63,6 +69,14 @@ export class ImageGallery extends React.Component {
 
   handleClick = () => {
     this.setState(toggleHidden);
+  };
+
+  handlePrevClick = () => {
+    this.setState(rotateImage(-1));
+  };
+
+  handleNextClick = () => {
+    this.setState(rotateImage(+1));
   };
 
   render() {
@@ -90,12 +104,13 @@ export class ImageGallery extends React.Component {
               </figcaption>
             )}
           </figure>
-          <a class="prev" onclick="rotateSlides(-1)">
+          <a className="prev" onClick={this.handlePrevClick}>
             ❮
           </a>
-          <a class="next" onclick="rotateSlides(1)">
+          <a className="next" onClick={this.handleNextClick}>
             ❯
           </a>
+          <ThumbnailViewer images={this.state.images} />
         </div>
       </div>
     );
@@ -110,3 +125,25 @@ ImageGallery.propTypes = {
 ImageGallery.defaultProps = {
   hidden: true,
 };
+
+class ThumbnailViewer extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  render() {
+    return (
+      <div>
+        {this.props.images.map(function(image, index) {
+          // TODO: calculate Thumbnail width (up to a max number of thumbnails)
+          return <Thumbnail src={image.src} key={index} />;
+        })}
+      </div>
+    );
+  }
+}
+
+function Thumbnail({ src }) {
+  return <img src={src} alt="Thumbnail in gallery" style={{ width: '25%' }} />;
+}
