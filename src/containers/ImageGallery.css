@@ -79,3 +79,22 @@
 .next:hover {
   background-color: rgba(0, 0, 0, 0.8);
 }
+
+.ThumbnailViewer {
+  background: black;
+  margin-bottom: 100px;
+}
+
+.Thumbnail {
+  cursor: pointer;
+  opacity: 0.85;
+}
+
+.Thumbnail:hover {
+  opacity: 1;
+}
+
+.ThumbnailSelected {
+  box-sizing: border-box;
+  border: 1px solid slateblue;
+}

@@ -110,7 +110,10 @@ export class ImageGallery extends React.Component {
           <a className="next" onClick={this.handleNextClick}>
             ❯
           </a>
-          <ThumbnailViewer images={this.state.images} />
+          <ThumbnailViewer
+            images={this.state.images}
+            currentImage={currentImage}
+          />
         </div>
       </div>
     );
@@ -126,24 +129,50 @@ ImageGallery.defaultProps = {
   hidden: true,
 };
 
+// TODO: prop-types
 class ThumbnailViewer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
 
+  // TODO: Extract func outside component
+  calculateWidth(numThumbnails, maxThumbnails = 4) {
+    const minWidth = 100 / maxThumbnails;
+    const width = 100 / numThumbnails;
+    return Math.max(minWidth, width);
+  }
+
   render() {
+    const { images, currentImage } = this.props;
+    const width = this.calculateWidth(images.length);
+
+    // TODO: Consider setting a max-width (e.g. 700px) on div
     return (
-      <div>
+      <div className="ThumbnailViewer">
         {this.props.images.map(function(image, index) {
-          // TODO: calculate Thumbnail width (up to a max number of thumbnails)
-          return <Thumbnail src={image.src} key={index} />;
+          return (
+            <Thumbnail
+              src={image.src}
+              key={index}
+              width={width}
+              selected={currentImage === image.src}
+            />
+          );
         })}
       </div>
     );
   }
 }
 
-function Thumbnail({ src }) {
-  return <img src={src} alt="Thumbnail in gallery" style={{ width: '25%' }} />;
+// TODO: prop-types
+function Thumbnail({ src, width, selected }) {
+  return (
+    <img
+      src={src}
+      alt="Thumbnail in gallery"
+      className={`Thumbnail ${selected && 'ThumbnailSelected'}`}
+      style={{ width: `${width}%` }}
+    />
+  );
 }
