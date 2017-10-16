@@ -44,6 +44,16 @@ function currentImage(images) {
   });
 }
 
+function selectImage(imageSrc) {
+  return state => {
+    const img = state.images.find(image => imageSrc.endsWith(image.src));
+    return {
+      currentImage: img.src,
+      currentCaption: img.caption,
+    };
+  };
+}
+
 function rotateImage(position) {
   // TODO
 }
@@ -67,7 +77,7 @@ export class ImageGallery extends React.Component {
     this.setState(toggleHidden);
   }
 
-  handleClick = () => {
+  handleCloseClick = () => {
     this.setState(toggleHidden);
   };
 
@@ -79,6 +89,10 @@ export class ImageGallery extends React.Component {
     this.setState(rotateImage(+1));
   };
 
+  handleThumbnailClick = event => {
+    this.setState(selectImage(event.target.src));
+  };
+
   render() {
     const { currentImage, currentCaption, hidden } = this.state;
     return (
@@ -86,7 +100,7 @@ export class ImageGallery extends React.Component {
         className="ImageGallery"
         style={{ display: hidden ? 'none' : 'block' }}
       >
-        <span className="ModalClose" onClick={this.handleClick}>
+        <span className="ModalClose" onClick={this.handleCloseClick}>
           &times;
         </span>
 
@@ -113,6 +127,7 @@ export class ImageGallery extends React.Component {
           <ThumbnailViewer
             images={this.state.images}
             currentImage={currentImage}
+            clickAction={this.handleThumbnailClick}
           />
         </div>
       </div>
@@ -144,7 +159,7 @@ class ThumbnailViewer extends React.Component {
   }
 
   render() {
-    const { images, currentImage } = this.props;
+    const { images, currentImage, clickAction } = this.props;
     const width = this.calculateWidth(images.length);
 
     // TODO: Consider setting a max-width (e.g. 700px) on div
@@ -157,6 +172,7 @@ class ThumbnailViewer extends React.Component {
               key={index}
               width={width}
               selected={currentImage === image.src}
+              clickAction={clickAction}
             />
           );
         })}
@@ -166,13 +182,14 @@ class ThumbnailViewer extends React.Component {
 }
 
 // TODO: prop-types
-function Thumbnail({ src, width, selected }) {
+function Thumbnail({ src, width, selected, clickAction }) {
   return (
     <img
       src={src}
       alt="Thumbnail in gallery"
       className={`Thumbnail ${selected && 'ThumbnailSelected'}`}
       style={{ width: `${width}%` }}
+      onClick={clickAction}
     />
   );
 }
