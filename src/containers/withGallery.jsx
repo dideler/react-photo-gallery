@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import './ImageGallery.css';
 
+// TODO: Refactor to pass image index around instead of src and caption, to lookup instead of linear search
 export default function withGallery(ImageComponent, store) {
   return class extends React.Component {
     constructor(props) {
@@ -55,7 +56,20 @@ function selectImage(imageSrc) {
 }
 
 function rotateImage(position) {
-  // TODO
+  return ({ currentImage, images }) => {
+    const imgIndex = images.findIndex(image =>
+      currentImage.endsWith(image.src)
+    );
+
+    const index = (imgIndex + position + images.length) % images.length;
+
+    const newImage = images[index];
+
+    return {
+      currentImage: newImage.src,
+      currentCaption: newImage.caption,
+    };
+  };
 }
 
 function toggleHidden(state) {
