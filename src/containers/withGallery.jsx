@@ -57,7 +57,9 @@ function selectImage(imageSrc) {
 }
 
 function rotateImage(position) {
-  return ({ currentImage }, { images }) => {
+  return ({ hidden, currentImage }, { images }) => {
+    if (hidden) return;
+
     const imgIndex = images.findIndex(image =>
       currentImage.endsWith(image.src),
     );
