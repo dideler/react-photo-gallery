@@ -4,11 +4,12 @@ import PropTypes from 'prop-types';
 import './Thumbnail.css';
 
 export default function Thumbnail({ src, alt, width, selected, clickAction }) {
+  const selectedStyle = selected ? 'ThumbnailSelected' : '';
   return (
     <img
       src={src}
       alt={alt}
-      className={`Thumbnail ${selected && 'ThumbnailSelected'}`}
+      className={`Thumbnail ${selectedStyle}`}
       style={{ width: `${width}%` }}
       onClick={clickAction}
     />
