@@ -77,6 +77,12 @@ function toggleHidden(state) {
   return { hidden: !state.hidden };
 }
 
+const KEYS = {
+  LEFT: 37,
+  RIGHT: 39,
+  ESC: 27,
+};
+
 export class ImageGallery extends React.Component {
   constructor(props) {
     super(props);
@@ -90,6 +96,39 @@ export class ImageGallery extends React.Component {
   componentWillReceiveProps(nextProps) {
     this.setState(toggleHidden);
   }
+
+  componentDidMount() {
+    window.addEventListener('keydown', this.handleKeyboardInput);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this.handleKeyboardInput);
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.state.currentImage !== nextState.currentImage) {
+      return true;
+    }
+    if (this.state.hidden !== nextState.hidden) {
+      return true;
+    }
+    return false;
+  }
+
+  handleKeyboardInput = event => {
+    switch (event.keyCode) {
+      case KEYS.LEFT:
+        this.handlePrevClick();
+        break;
+      case KEYS.RIGHT:
+        this.handleNextClick();
+        break;
+      case KEYS.ESC:
+        this.handleCloseClick();
+        break;
+      default:
+    }
+  };
 
   handleCloseClick = () => {
     this.setState(toggleHidden);
