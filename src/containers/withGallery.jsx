@@ -73,6 +73,10 @@ function rotateImage(position) {
   };
 }
 
+function hideModal() {
+  return { hidden: true };
+}
+
 function toggleHidden(state) {
   return { hidden: !state.hidden };
 }
@@ -131,7 +135,7 @@ export class ImageGallery extends React.Component {
   };
 
   handleCloseClick = () => {
-    this.setState(toggleHidden);
+    this.setState(hideModal);
   };
 
   handlePrevClick = () => {
