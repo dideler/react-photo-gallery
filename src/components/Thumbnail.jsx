@@ -14,3 +14,10 @@ export default function Thumbnail({ src, width, selected, clickAction }) {
     />
   );
 }
+
+Thumbnail.propTypes = {
+  src: PropTypes.string.isRequired,
+  width: PropTypes.number,
+  selected: PropTypes.bool,
+  clickAction: PropTypes.func,
+};
