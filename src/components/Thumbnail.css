@@ -1,0 +1,13 @@
+.Thumbnail {
+  cursor: pointer;
+  opacity: 0.85;
+}
+
+.Thumbnail:hover {
+  opacity: 1;
+}
+
+.ThumbnailSelected {
+  box-sizing: border-box;
+  border: 1px solid slateblue;
+}
