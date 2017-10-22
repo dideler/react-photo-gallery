@@ -47,8 +47,8 @@ function currentImage(images) {
 }
 
 function selectImage(imageSrc) {
-  return state => {
-    const img = state.images.find(image => imageSrc.endsWith(image.src));
+  return (_state, { images }) => {
+    const img = images.find(image => imageSrc.endsWith(image.src));
     return {
       currentImage: img.src,
       currentCaption: img.caption,
@@ -57,9 +57,9 @@ function selectImage(imageSrc) {
 }
 
 function rotateImage(position) {
-  return ({ currentImage, images }) => {
+  return ({ currentImage }, { images }) => {
     const imgIndex = images.findIndex(image =>
-      currentImage.endsWith(image.src)
+      currentImage.endsWith(image.src),
     );
 
     const index = (imgIndex + position + images.length) % images.length;
@@ -81,7 +81,6 @@ export class ImageGallery extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      images: props.images,
       currentImage: props.startingImage,
       currentCaption: props.startingCaption,
       hidden: props.hidden,
@@ -140,7 +139,7 @@ export class ImageGallery extends React.Component {
             ❯
           </a>
           <ThumbnailViewer
-            images={this.state.images}
+            images={this.props.images}
             currentImage={currentImage}
             clickAction={this.handleThumbnailClick}
           />
