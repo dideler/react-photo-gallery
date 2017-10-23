@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Thumbnail from 'components/Thumbnail';
+import ThumbnailViewer from 'components/ThumbnailViewer';
 import './ImageGallery.css';
 
 // TODO: Refactor to pass image index around instead of src and caption, to lookup instead of linear search
@@ -202,40 +202,3 @@ ImageGallery.propTypes = {
 ImageGallery.defaultProps = {
   hidden: true,
 };
-
-// TODO: prop-types
-class ThumbnailViewer extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  // TODO: Extract func outside component
-  calculateWidth(numThumbnails, maxThumbnails = 4) {
-    const minWidth = 100 / maxThumbnails;
-    const width = 100 / numThumbnails;
-    return Math.max(minWidth, width);
-  }
-
-  render() {
-    const { images, currentImage, clickAction } = this.props;
-    const width = this.calculateWidth(images.length);
-
-    // TODO: Consider setting a max-width (e.g. 700px) on div
-    return (
-      <div className="ThumbnailViewer">
-        {this.props.images.map(function(image, index) {
-          return (
-            <Thumbnail
-              src={image.src}
-              key={index}
-              width={width}
-              selected={currentImage === image.src}
-              clickAction={clickAction}
-            />
-          );
-        })}
-      </div>
-    );
-  }
-}

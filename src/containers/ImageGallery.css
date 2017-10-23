@@ -79,8 +79,3 @@
 .next:hover {
   background-color: rgba(0, 0, 0, 0.8);
 }
-
-.ThumbnailViewer {
-  background: black;
-  margin-bottom: 100px;
-}
