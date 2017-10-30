@@ -61,7 +61,7 @@ function rotateImage(position) {
     if (hidden) return;
 
     const imgIndex = images.findIndex(image =>
-      currentImage.endsWith(image.src),
+      currentImage.endsWith(image.src)
     );
 
     const index = (imgIndex + position + images.length) % images.length;
@@ -163,26 +163,28 @@ export class ImageGallery extends React.Component {
           &times;
         </span>
 
-        <div className="ModalImageContainer">
-          <figure>
-            <img
-              className="ModalImage"
-              src={currentImage}
-              alt={this.props.alt}
-            />
+        <div className="ModalContainer">
+          <div className="ModalImageContainer">
+            <figure>
+              <img
+                className="ModalImage"
+                src={currentImage}
+                alt={this.props.alt}
+              />
 
-            {currentCaption && (
-              <figcaption className="ModalImageCaption">
-                {currentCaption}
-              </figcaption>
-            )}
-          </figure>
-          <a className="prev" onClick={this.handlePrevClick}>
-            ❮
-          </a>
-          <a className="next" onClick={this.handleNextClick}>
-            ❯
-          </a>
+              {currentCaption && (
+                <figcaption className="ModalImageCaption">
+                  {currentCaption}
+                </figcaption>
+              )}
+            </figure>
+            <a className="prev" onClick={this.handlePrevClick}>
+              ❮
+            </a>
+            <a className="next" onClick={this.handleNextClick}>
+              ❯
+            </a>
+          </div>
           <ThumbnailViewer
             images={this.props.images}
             currentImage={currentImage}
